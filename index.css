@@ -12,7 +12,12 @@ main{
     border: 1px purple solid;
     width: 550px;
     height: 779px;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 h1{
@@ -36,6 +41,7 @@ h1{
     padding: 3rem;
     box-sizing: border-box;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     height: 29%;
@@ -48,10 +54,13 @@ h1{
 
 .second-half{
     box-sizing: border-box;
+    width: 90%;
     height: 71%;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    grid-template-columns: 10px 1fr 10px;
 }
 
 
@@ -101,4 +110,11 @@ h1{
 
 .svg-pholder-cont p{
     margin: 0.4em;
+}
+
+.movie-box{
+    border-bottom: #505050 1px solid;
+    margin-bottom: 199px;
+    width: 100%;
+    text-align: start;
 }
