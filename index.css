@@ -60,8 +60,9 @@ h1{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    grid-template-columns: 10px 1fr 10px;
+    overflow: auto;
 }
+
 
 
 .search-field{
@@ -114,9 +115,9 @@ h1{
 
 .movie-box{
     border-bottom: #505050 1px solid;
-    margin-bottom: 199px;
+    margin-bottom: 30px;
     width: 100%;
-    height: 200px;
+    height: 150px;
     text-align: start;
     display: grid;
     grid-template-areas: 
@@ -131,4 +132,53 @@ h1{
 .movie-box img{
     grid-area: a;
     width: 100px;
+}
+
+.title-and-rating{
+    grid-area: b;
+    display: flex;
+    align-items: center;
+}
+.title-and-rating p, h2{
+    margin: 0;
+}
+
+.misc{
+    grid-area: c;
+    display: flex;
+    font-size: 13px;
+    color: #505050;
+    height: 3em;
+    justify-content: space-between;
+    padding-right: 3em;
+}
+
+.add-to-watchlist{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.add-to-watchlist svg{
+    margin-right: 0.3rem;
+}
+
+.add-to-watchlist p,
+.add-to-watchlist svg{
+    pointer-events: none;
+}
+
+.desc{
+    grid-area: d;
+    font-size: 0.9rem;
+}
+
+.add-svg{
+
+}
+.remove-svg{
+    display: none;
 }
