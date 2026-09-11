@@ -22,6 +22,8 @@ document.addEventListener("click", async (e) => {
 
                 const isInWatchlist = watchlist.includes(detailedMovie.imdbID)
 
+                console.log(isInWatchlist)
+
                 return `<div class="movie-box" id="movieId-${detailedMovie.imdbID}">
                 <img src="${detailedMovie.Poster}"
                     alt="">
@@ -40,7 +42,7 @@ document.addEventListener("click", async (e) => {
                                 d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM9 5C9 4.44772 8.55228 4 8 4C7.44772 4 7 4.44772 7 5V7H5C4.44772 7 4 7.44771 4 8C4 8.55228 4.44772 9 5 9H7V11C7 11.5523 7.44772 12 8 12C8.55228 12 9 11.5523 9 11V9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H9V5Z"
                                 fill="#111827" />
                         </svg>
-                        <svg class="remove-svg" id="removeSvg" style="display: ${isInWatchlist ? "none" : "block"}"  width="16" height="16" viewBox="0 0 16 16" fill="none"
+                        <svg class="remove-svg" id="removeSvg" style="display: ${isInWatchlist ? "block" : "none"}"  width="16" height="16" viewBox="0 0 16 16" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM5 7C4.44772 7 4 7.44772 4 8C4 8.55228 4.44772 9 5 9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H5Z"
@@ -55,16 +57,75 @@ document.addEventListener("click", async (e) => {
                     </p>
                 </div>
             </div>`
-    })
-
-
-
+            })
             secondHalf.innerHTML = moviesList.join("")
             secondHalf.style.justifyContent = "start"
             secondHalf.style.paddingTop = "50px"
             console.log(moviesList)
+
             break;
-        case "":
+
+
+        case "wList":
+            console.log("watchlist works!")
+            console.log(watchlist)
+
+            const watchlistedMovies = await Promise.all(
+                watchlist.map(async watchlistedMovie => {
+
+                    const watchlistResponse = await fetch(`https://www.omdbapi.com/?i=${watchlistedMovie}&apikey=8aa081d0`)
+
+                    const watchlistDetails = await watchlistResponse.json()
+
+                    console.log(watchlistDetails)
+
+
+                    const isInWatchlist = watchlist.includes(watchlistDetails.imdbID)
+
+                    console.log(isInWatchlist)
+
+                    return `<div class="movie-box" id="movieId-${watchlistDetails.imdbID}">
+                <img src="${watchlistDetails.Poster}"
+                    alt="">
+                <div class="title-and-rating" id="titleAndRating">
+                    <h2 id="movieTitle">${watchlistDetails.Title}</h2>
+                    <p>⭐</p>
+                    <p id="movieRating-">${watchlistDetails.imdbRating}</p>
+                </div>
+                <div class="misc" id="misc">
+                    <p>${watchlistDetails.Runtime}</p>
+                    <p>${watchlistDetails.Genre}</p>
+                    <button class="add-to-watchlist" id="addToWatchlist" data-add="${watchlistDetails.imdbID}">
+                        <svg class="add-svg" id="addSvg" style="display: ${isInWatchlist ? "none" : "block"}" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM9 5C9 4.44772 8.55228 4 8 4C7.44772 4 7 4.44772 7 5V7H5C4.44772 7 4 7.44771 4 8C4 8.55228 4.44772 9 5 9H7V11C7 11.5523 7.44772 12 8 12C8.55228 12 9 11.5523 9 11V9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H9V5Z"
+                                fill="#111827" />
+                        </svg>
+                        <svg class="remove-svg" id="removeSvg" style="display: ${isInWatchlist ? "block" : "none"}"  width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM5 7C4.44772 7 4 7.44772 4 8C4 8.55228 4.44772 9 5 9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H5Z"
+                                fill="#111827" />
+                        </svg>
+                        <p>Watchlist</p>
+                    </button>
+                </div>
+                <div class="desc">
+                    <p>
+                        ${watchlistDetails.Plot}
+                    </p>
+                </div>
+            </div>`
+                })
+            )
+            console.log(watchlistedMovies)
+
+            secondHalf.innerHTML = watchlistedMovies.join("")
+
+            secondHalf.style.justifyContent = "start"
+            secondHalf.style.paddingTop = "50px"
+
             break;
     }
 
